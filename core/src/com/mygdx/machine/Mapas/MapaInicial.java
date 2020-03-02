@@ -1,5 +1,6 @@
 package com.mygdx.machine.Mapas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayers;
@@ -20,8 +21,10 @@ public class MapaInicial {
     private TiledMapTileLayer terrainLayer;
     private TiledMapTileLayer terrainLayer2;
     private int[] decorationLayersIndices;
-
+    private float w,h;
     public MapaInicial() {
+        w= Gdx.graphics.getWidth();
+        h=Gdx.graphics.getHeight();
         manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader());
         manager.load("mapas/MapaInicio.tmx", TiledMap.class);
@@ -34,10 +37,12 @@ public class MapaInicial {
         mapHeightInTiles = properties.get("height", Integer.class);
         mapWidthInPixels = mapWidthInTiles * tileWidth;
         mapHeightInPixels = mapHeightInTiles * tileHeight;
-        camera = new OrthographicCamera(mapWidthInPixels, mapHeightInPixels);
+        renderer = new OrthogonalTiledMapRenderer(map);
+        camera = new OrthographicCamera(mapWidthInPixels,mapHeightInPixels);
         camera.position.x = mapWidthInPixels/2;
         camera.position.y = mapHeightInPixels/2;
-        renderer = new OrthogonalTiledMapRenderer(map);
+        w=w/mapWidthInPixels;
+        h=h/mapHeightInPixels;
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("muebles");
@@ -74,5 +79,13 @@ public class MapaInicial {
 
     public TiledMap getMap() {
         return map;
+    }
+
+    public float getW() {
+        return w;
+    }
+
+    public float getH() {
+        return h;
     }
 }

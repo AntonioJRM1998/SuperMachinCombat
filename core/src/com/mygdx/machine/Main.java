@@ -12,6 +12,9 @@ import com.mygdx.machine.Mapas.Colisiones;
 import com.mygdx.machine.Mapas.MapaInicial;
 import com.mygdx.machine.Personaje.Jugador;
 
+import java.awt.DisplayMode;
+import java.awt.Point;
+
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Jugador personaje;
