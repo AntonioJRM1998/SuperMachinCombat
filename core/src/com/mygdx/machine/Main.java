@@ -11,7 +11,7 @@ public class Main extends Game {
 
 	@Override
 	public void create () {
-	    setPantallaActual(new MapaInicial(this));
+	    setPantallaActual(new MapaInicial(this,100,100));
 	}
 
 	@Override

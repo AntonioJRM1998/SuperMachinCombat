@@ -1,24 +1,20 @@
 package com.mygdx.machine.Personaje;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.machine.Main;
-import com.mygdx.machine.Mapas.BaseScreen;
 import com.mygdx.machine.Mapas.Colisiones;
 import com.mygdx.machine.Mapas.MapaInicial;
 import com.mygdx.machine.Mapas.MapaPlantaBaja;
 
 public class Jugador extends Actor {
     public float x, y;
-    private MapaPlantaBaja plantaBaja;
     private Animation animation;
     private float tiempo;
     private Rectangle rectangle;
@@ -35,7 +31,8 @@ public class Jugador extends Actor {
     private int daño;
     private Colisiones colisiones;
     private Main main;
-    public Jugador(int x, int y, float AnchoJugador, float lagoJugador, Colisiones colision, Main main) {
+    private float wReescalado,hReescalado;
+    public Jugador(float x, float y, float AnchoJugador, float lagoJugador, Colisiones colision, Main main) {
         this.x = x;
         this.y = y;
         this.colisiones=colision;
@@ -76,13 +73,25 @@ public class Jugador extends Actor {
                     }
                 }
                 if(olision==false){
-                    if(rectangles[rectangles.length-1].overlaps(rectangle.set(x,y,AnchoJugador,largoJugador))){
-                        main.setPantallaActual(new MapaPlantaBaja(main));
-                    }else{
-                        System.out.println("No entro");
+                    for(int b=0;b<colisiones.getSalida().length;b++){
+                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                            switch (colisiones.getObj2()[b].getName()){
+                                case "salidaBajo":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPlantaBaja(main,100,100));
+                                    break;
+                                case "salida1":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaInicial(main,347,298));
+                                    break;
+                            }
+                        }
                     }
                     y=y+9;
+                }else{
+
                 }
+
                 break;
             case 's':
                 for(int b=0;b<rectangles.length-1;b++){
@@ -126,7 +135,6 @@ public class Jugador extends Actor {
                 break;
         }
     }
-
     public void hacerAnimaciones(char letra) {
         switch (letra) {
             case 'd':
@@ -300,4 +308,5 @@ public class Jugador extends Actor {
     public Rectangle getRectangle() {
         return rectangle;
     }
+
 }

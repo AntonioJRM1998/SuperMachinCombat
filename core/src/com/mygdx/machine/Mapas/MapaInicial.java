@@ -25,7 +25,7 @@ public class MapaInicial extends BaseScreen {
         private Main main;
         private Jugador player;
         private SpriteBatch batch;
-    public MapaInicial(Main main) {
+    public MapaInicial(Main main,float x,float y) {
         super(main);
         this.main=main;
         w= Gdx.graphics.getWidth();
@@ -47,21 +47,19 @@ public class MapaInicial extends BaseScreen {
         camera.position.x = mapWidthInPixels/2;
         camera.position.y = mapHeightInPixels/2;
         w=w/mapWidthInPixels;
+        System.out.println(w);
         h=h/mapHeightInPixels;
+        System.out.println(h);
         batch=new SpriteBatch();
         Colisiones colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
-        player=new Jugador(100,100,50,50,colisiones,main);
+        player=new Jugador(x*w,y/h,50,50,colisiones,main);
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("muebles");
         decorationLayersIndices = new int[]{
                 mapLayers.getIndex("zonaAtras")
         };
-        MapObjects mons = map.getLayers().get("colisiones").getObjects();
-        RectangleMapObject obj1 = (RectangleMapObject) mons.get(18);
-        rect1 = obj1.getRectangle();
-        rect1.set(rect1.x*w,rect1.y*h,rect1.width*w,rect1.height*h);
         InputMultiplexer multiplexer=new InputMultiplexer();
         multiplexer.addProcessor(new EscucharTeclado(player));
         Gdx.input.setInputProcessor(multiplexer);
@@ -105,6 +103,8 @@ public class MapaInicial extends BaseScreen {
 
     public void dispose() {
         manager.dispose();
+        stage.dispose();
+        renderer.dispose();
     }
 
     public TiledMap getMap() {
