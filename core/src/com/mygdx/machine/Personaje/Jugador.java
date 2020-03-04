@@ -1,18 +1,24 @@
 package com.mygdx.machine.Personaje;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.machine.Main;
+import com.mygdx.machine.Mapas.BaseScreen;
 import com.mygdx.machine.Mapas.Colisiones;
 import com.mygdx.machine.Mapas.MapaInicial;
+import com.mygdx.machine.Mapas.MapaPlantaBaja;
 
 public class Jugador extends Actor {
     public float x, y;
+    private MapaPlantaBaja plantaBaja;
     private Animation animation;
     private float tiempo;
     private Rectangle rectangle;
@@ -23,22 +29,21 @@ public class Jugador extends Actor {
     private Rectangle[]rectangles;
     private Sprite sprite;
     private String jugadorVista;
-    private Colisiones colisiones;
     private float AnchoJugador,largoJugador;
     private Boolean olision;
-    private MapaInicial mapaInicial;
     private int vida;
     private int daño;
-    public Jugador(int x, int y,float AnchoJugador,float lagoJugador) {
+    private Colisiones colisiones;
+    private Main main;
+    public Jugador(int x, int y, float AnchoJugador, float lagoJugador, Colisiones colision, Main main) {
         this.x = x;
         this.y = y;
+        this.colisiones=colision;
+        this.main=main;
         this.setSize(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10);
-        colisiones=new Colisiones();
-        mapaInicial=new MapaInicial();
-        colisiones.checkCollision(mapaInicial.getMap(),this);
-        rectangles=colisiones.getRect();
         this.AnchoJugador=AnchoJugador;
         this.largoJugador=lagoJugador;
+        rectangles=colisiones.getRect();
         texture = new Texture(Gdx.files.internal("recursos/character.png"));
         jugadorVista = "";
         rectangle=new Rectangle(x,y,texture.getWidth(),texture.getHeight());
@@ -62,7 +67,7 @@ public class Jugador extends Actor {
     public void moverJugador(char letra) {
         switch (letra) {
             case 'w':
-                for(int b=0;b<rectangles.length;b++){
+                for(int b=0;b<rectangles.length-1;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
@@ -71,11 +76,16 @@ public class Jugador extends Actor {
                     }
                 }
                 if(olision==false){
+                    if(rectangles[rectangles.length-1].overlaps(rectangle.set(x,y,AnchoJugador,largoJugador))){
+                        main.setPantallaActual(new MapaPlantaBaja(main));
+                    }else{
+                        System.out.println("No entro");
+                    }
                     y=y+9;
                 }
                 break;
             case 's':
-                for(int b=0;b<rectangles.length;b++){
+                for(int b=0;b<rectangles.length-1;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y-9,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
@@ -84,11 +94,12 @@ public class Jugador extends Actor {
                     }
                 }
                 if(olision==false){
+
                     y=y-9;
                 }
                 break;
             case 'd':
-                for(int b=0;b<rectangles.length;b++){
+                for(int b=0;b<rectangles.length-1;b++){
                     if(rectangles[b].overlaps(rectangle.set(x+9,y,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
@@ -101,7 +112,7 @@ public class Jugador extends Actor {
                 }
                 break;
             case 'a':
-                for(int b=0;b<rectangles.length;b++){
+                for(int b=0;b<rectangles.length-1;b++){
                     if(rectangles[b].overlaps(rectangle.set(x-9,y,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
@@ -197,7 +208,7 @@ public class Jugador extends Actor {
     }
 
     public void atacar() {
-        texture = new Texture(Gdx.files.internal("ataques.png"));
+        texture = new Texture(Gdx.files.internal("recursos/ataques.png"));
         tmp = TextureRegion.split(texture, texture.getWidth() / 4, texture.getHeight() / 4);
         regions = new TextureRegion[4];
         switch (jugadorVista) {
@@ -233,7 +244,7 @@ public class Jugador extends Actor {
     }
 
     public void pararJugador() {
-        texture = new Texture(Gdx.files.internal("character.png"));
+        texture = new Texture(Gdx.files.internal("recursos/character.png"));
         tmp = TextureRegion.split(texture, texture.getWidth() / 17, texture.getHeight() / 8);
         regions = new TextureRegion[4];
         switch (jugadorVista) {

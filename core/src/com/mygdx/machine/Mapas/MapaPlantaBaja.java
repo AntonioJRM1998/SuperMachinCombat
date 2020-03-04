@@ -2,39 +2,34 @@ package com.mygdx.machine.Mapas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.machine.Escuchadores.EscucharTeclado;
 import com.mygdx.machine.Main;
 import com.mygdx.machine.Personaje.Jugador;
 
-public class MapaInicial extends BaseScreen {
-        private Main main;
-        private Jugador player;
-        private SpriteBatch batch;
-    public MapaInicial(Main main) {
+public class MapaPlantaBaja extends BaseScreen {
+    private Main main;
+    private Jugador player;
+    private SpriteBatch batch;
+    public MapaPlantaBaja(Main main){
         super(main);
         this.main=main;
         w= Gdx.graphics.getWidth();
         h=Gdx.graphics.getHeight();
         manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader());
-        manager.load("mapas/MapaInicio.tmx", TiledMap.class);
+        manager.load("mapas/MapaPlantaBaja.tmx", TiledMap.class);
         manager.finishLoading();
-        map = manager.get("mapas/MapaInicio.tmx", TiledMap.class);
+        map = manager.get("mapas/MapaPlantaBaja.tmx", TiledMap.class);
         MapProperties properties = map.getProperties();
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
@@ -54,25 +49,10 @@ public class MapaInicial extends BaseScreen {
         player=new Jugador(100,100,50,50,colisiones,main);
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
-        terrainLayer2 = (TiledMapTileLayer) mapLayers.get("muebles");
-        decorationLayersIndices = new int[]{
-                mapLayers.getIndex("zonaAtras")
-        };
-        MapObjects mons = map.getLayers().get("colisiones").getObjects();
-        RectangleMapObject obj1 = (RectangleMapObject) mons.get(18);
-        rect1 = obj1.getRectangle();
-        rect1.set(rect1.x*w,rect1.y*h,rect1.width*w,rect1.height*h);
         InputMultiplexer multiplexer=new InputMultiplexer();
         multiplexer.addProcessor(new EscucharTeclado(player));
         Gdx.input.setInputProcessor(multiplexer);
-        stage=new Stage();
-        stage.addActor(player);
-        stage.setDebugAll(true);
-        for(int c=0;c<colisiones.getRect().length;c++){
-            stage.addActor(colisiones.getActores()[c]);
-        }
     }
-
 
     @Override
     public void render(float delta) {
@@ -81,45 +61,10 @@ public class MapaInicial extends BaseScreen {
         camera.update();
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
-        renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
         batch.begin();
         player.render(batch);
         batch.end();
-        renderer.render(decorationLayersIndices);
-        stage.draw();
     }
 
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
-    public int getMapWidthInPixels() {
-        return mapWidthInPixels;
-    }
-
-    public int getMapHeightInPixels() {
-        return mapHeightInPixels;
-    }
-
-    public void dispose() {
-        manager.dispose();
-    }
-
-    public TiledMap getMap() {
-        return map;
-    }
-
-    public float getW() {
-        return w;
-    }
-
-    public float getH() {
-        return h;
-    }
-
-    public Rectangle getRect1() {
-        return rect1;
-    }
 }
