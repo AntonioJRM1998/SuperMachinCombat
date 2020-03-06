@@ -12,6 +12,7 @@ import com.mygdx.machine.Main;
 import com.mygdx.machine.Mapas.Colisiones;
 import com.mygdx.machine.Mapas.MapaInicial;
 import com.mygdx.machine.Mapas.MapaPlantaBaja;
+import com.mygdx.machine.Mapas.MapaPueblo;
 
 public class Jugador extends Actor {
     public float x, y;
@@ -73,16 +74,25 @@ public class Jugador extends Actor {
                     }
                 }
                 if(olision==false){
+                    System.out.println(colisiones.getSalida().length);
                     for(int b=0;b<colisiones.getSalida().length;b++){
-                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y,AnchoJugador,largoJugador))){
                             switch (colisiones.getObj2()[b].getName()){
                                 case "salidaBajo":
                                     main.dispose();
-                                    main.setPantallaActual(new MapaPlantaBaja(main,100,100));
+                                    main.setPantallaActual(new MapaPlantaBaja(main,358,10));
                                     break;
                                 case "salida1":
                                     main.dispose();
                                     main.setPantallaActual(new MapaInicial(main,347,298));
+                                    break;
+                                case "salida2":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPueblo(main,80,140));
+                                    break;
+                                case "miCasa":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPlantaBaja(main,194,10));
                                     break;
                             }
                         }
@@ -103,6 +113,20 @@ public class Jugador extends Actor {
                     }
                 }
                 if(olision==false){
+                    for(int b=0;b<colisiones.getSalida().length;b++){
+                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                            switch (colisiones.getObj2()[b].getName()){
+                                case "salidaBajo":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPlantaBaja(main,358,140));
+                                    break;
+                                case "salida1":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaInicial(main,347,298));
+                                    break;
+                            }
+                        }
+                    }
 
                     y=y-9;
                 }
@@ -117,6 +141,20 @@ public class Jugador extends Actor {
                     }
                 }
                 if(olision==false){
+                    for(int b=0;b<colisiones.getSalida().length;b++){
+                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                            switch (colisiones.getObj2()[b].getName()){
+                                case "salidaBajo":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPlantaBaja(main,358,140));
+                                    break;
+                                case "salida1":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaInicial(main,347,298));
+                                    break;
+                            }
+                        }
+                    }
                     x=x+9;
                 }
                 break;
@@ -130,6 +168,20 @@ public class Jugador extends Actor {
                     }
                 }
                 if(olision==false){
+                    for(int b=0;b<colisiones.getSalida().length;b++){
+                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                            switch (colisiones.getObj2()[b].getName()){
+                                case "salidaBajo":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPlantaBaja(main,358,140));
+                                    break;
+                                case "salida1":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaInicial(main,347,298));
+                                    break;
+                            }
+                        }
+                    }
                     x=x-9;
                 }
                 break;

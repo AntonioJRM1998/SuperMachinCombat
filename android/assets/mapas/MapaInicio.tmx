@@ -107,6 +107,6 @@
   <object id="20" x="366" y="302" width="2.66667" height="34.6667"/>
  </objectgroup>
  <objectgroup id="33" name="salidas">
-  <object id="27" name="salidaBajo" x="340.583" y="314.667" width="24.1667" height="18.6666"/>
+  <object id="27" name="salidaBajo" x="340.583" y="320.667" width="24.1667" height="10.1666"/>
  </objectgroup>
 </map>

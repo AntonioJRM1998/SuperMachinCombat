@@ -8,9 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -53,7 +51,7 @@ public class MapaInicial extends BaseScreen {
         batch=new SpriteBatch();
         Colisiones colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
-        player=new Jugador(x*w,y/h,50,50,colisiones,main);
+        player=new Jugador(x*w,y/h,70,75,colisiones,main);
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("muebles");

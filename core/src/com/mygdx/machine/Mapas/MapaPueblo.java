@@ -16,20 +16,20 @@ import com.mygdx.machine.Escuchadores.EscucharTeclado;
 import com.mygdx.machine.Main;
 import com.mygdx.machine.Personaje.Jugador;
 
-public class MapaPlantaBaja extends BaseScreen {
-    private Main main;
+public class MapaPueblo extends BaseScreen {
+    private Main maind;
     private Jugador player;
     private SpriteBatch batch;
-    public MapaPlantaBaja(Main main,float x,float y){
+    public MapaPueblo(Main main,float x,float y) {
         super(main);
-        this.main=main;
-        w= Gdx.graphics.getWidth();
-        h=Gdx.graphics.getHeight();
+        this.maind = main;
+        w = Gdx.graphics.getWidth();
+        h = Gdx.graphics.getHeight();
         manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader());
-        manager.load("mapas/MapaPlantaBaja.tmx", TiledMap.class);
+        manager.load("mapas/MapaPueblo.tmx", TiledMap.class);
         manager.finishLoading();
-        map = manager.get("mapas/MapaPlantaBaja.tmx", TiledMap.class);
+        map = manager.get("mapas/MapaPueblo.tmx", TiledMap.class);
         MapProperties properties = map.getProperties();
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
@@ -38,47 +38,46 @@ public class MapaPlantaBaja extends BaseScreen {
         mapWidthInPixels = mapWidthInTiles * tileWidth;
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         renderer = new OrthogonalTiledMapRenderer(map);
-        camera = new OrthographicCamera(mapWidthInPixels,mapHeightInPixels);
-        camera.position.x = mapWidthInPixels/2;
-        camera.position.y = mapHeightInPixels/2;
-        w=w/mapWidthInPixels;
-        h=h/mapHeightInPixels;
-        batch=new SpriteBatch();
-        Colisiones colisiones=new Colisiones();
-        colisiones.checkCollision(map,w,h);
-        player=new Jugador(x*w,y*h,70,75,colisiones,main);
+        camera = new OrthographicCamera(mapWidthInPixels, mapHeightInPixels);
+        camera.position.x = mapWidthInPixels / 2;
+        camera.position.y = mapHeightInPixels / 2;
+        w = w / mapWidthInPixels;
+        System.out.println(w);
+        h = h / mapHeightInPixels;
+        System.out.println(h);
+        batch = new SpriteBatch();
+        Colisiones colisiones = new Colisiones();
+        colisiones.checkCollision(map, w, h);
+        player = new Jugador(x * w, y * h, 70, 75, colisiones, main);
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
-        terrainLayer2=(TiledMapTileLayer)mapLayers.get("objetos");
+        terrainLayer2 = (TiledMapTileLayer) mapLayers.get("cosas");
         decorationLayersIndices = new int[]{
-                mapLayers.getIndex("objetosAtras")
+                mapLayers.getIndex("casas")
         };
-        stage=new Stage();
-        stage.addActor(player);
-        stage.setDebugAll(true);
-        for(int c=0;c<colisiones.getRect().length;c++){
-            stage.addActor(colisiones.getActores()[c]);
-        }
-        InputMultiplexer multiplexer=new InputMultiplexer();
+        InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new EscucharTeclado(player));
         Gdx.input.setInputProcessor(multiplexer);
+        stage = new Stage();
+        stage.addActor(player);
+        stage.setDebugAll(true);
+        for (int c = 0; c < colisiones.getRect().length; c++) {
+            stage.addActor(colisiones.getActores()[c]);
+        }
     }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        renderer.setView(camera);
-        camera.update();
-        renderer.getBatch().begin();
-        renderer.renderTileLayer(terrainLayer);
-        renderer.renderTileLayer(terrainLayer2);
-        renderer.getBatch().end();
-        batch.begin();
-        player.render(batch);
-        batch.end();
-        renderer.render(decorationLayersIndices);
-        stage.draw();
-
-    }
+        public void render ( float delta){
+            super.render(delta);
+            renderer.setView(camera);
+            camera.update();
+            renderer.getBatch().begin();
+            renderer.renderTileLayer(terrainLayer);
+            renderer.renderTileLayer(terrainLayer2);
+            renderer.getBatch().end();
+            batch.begin();
+            player.render(batch);
+            batch.end();
+            renderer.render(decorationLayersIndices);
+            stage.draw();
+        }
 
 }

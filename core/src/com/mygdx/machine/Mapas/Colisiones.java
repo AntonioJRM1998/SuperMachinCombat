@@ -51,7 +51,6 @@ public class Colisiones {
     public Rectangle[] getRect() {
         return rect;
     }
-
     public RectangleMapObject[] getObj2() {
         return obj2;
     }
