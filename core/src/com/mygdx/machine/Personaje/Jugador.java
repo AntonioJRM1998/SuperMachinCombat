@@ -33,19 +33,19 @@ public class Jugador extends Actor {
     private Colisiones colisiones;
     private Main main;
     private float wReescalado,hReescalado;
-    public Jugador(float x, float y, float AnchoJugador, float lagoJugador, Colisiones colision, Main main) {
+    public Jugador(float x, float y, Colisiones colision, Main main,float wReescalado,float hReescalado) {
         this.x = x;
         this.y = y;
         this.colisiones=colision;
         this.main=main;
+        this.wReescalado=wReescalado;
+        this.hReescalado=hReescalado;
         this.setSize(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10);
-        this.AnchoJugador=AnchoJugador;
-        this.largoJugador=lagoJugador;
         rectangles=colisiones.getRect();
         texture = new Texture(Gdx.files.internal("recursos/character.png"));
         jugadorVista = "";
         rectangle=new Rectangle(x,y,texture.getWidth(),texture.getHeight());
-        tmp = TextureRegion.split(texture, texture.getWidth() / 17, texture.getHeight() / 8);
+        tmp = TextureRegion.split(texture, texture.getWidth() / 4, texture.getHeight() / 4);
         regions = new TextureRegion[4];
         for (int b = 0; b < regions.length; b++) {
             regions[b] = tmp[0][0];
@@ -58,8 +58,10 @@ public class Jugador extends Actor {
         tiempo += Gdx.graphics.getDeltaTime();
         textureRegion = (TextureRegion) animation.getKeyFrame(tiempo, true);
         sprite=new Sprite(textureRegion);
-        setBounds(x,y,AnchoJugador-1,largoJugador-10);
-        batch.draw(sprite, x, y,AnchoJugador,largoJugador);
+        AnchoJugador=sprite.getWidth()*wReescalado;
+        largoJugador=sprite.getHeight()*hReescalado-10;
+        setBounds(x,y,sprite.getWidth()*wReescalado,sprite.getHeight()*hReescalado-15);
+        batch.draw(sprite, x, y,sprite.getWidth()*wReescalado,sprite.getHeight()*hReescalado);
     }
 
     public void moverJugador(char letra) {
@@ -269,8 +271,8 @@ public class Jugador extends Actor {
 
     public void atacar() {
         texture = new Texture(Gdx.files.internal("recursos/ataques.png"));
+        rectangle=new Rectangle(x,y,texture.getWidth(),texture.getHeight());
         tmp = TextureRegion.split(texture, texture.getWidth() / 4, texture.getHeight() / 4);
-        regions = new TextureRegion[4];
         switch (jugadorVista) {
             case "Derecha":
                 for (int b = 0; b < regions.length; b++) {
@@ -305,8 +307,8 @@ public class Jugador extends Actor {
 
     public void pararJugador() {
         texture = new Texture(Gdx.files.internal("recursos/character.png"));
-        tmp = TextureRegion.split(texture, texture.getWidth() / 17, texture.getHeight() / 8);
-        regions = new TextureRegion[4];
+        rectangle=new Rectangle(x,y,texture.getWidth(),texture.getHeight());
+        tmp = TextureRegion.split(texture, texture.getWidth() / 4, texture.getHeight() / 4);
         switch (jugadorVista) {
             case "Derecha":
                 for (int b = 0; b < regions.length; b++) {

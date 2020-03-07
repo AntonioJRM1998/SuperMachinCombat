@@ -46,7 +46,7 @@ public class MapaPlantaBaja extends BaseScreen {
         batch=new SpriteBatch();
         Colisiones colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
-        player=new Jugador(x*w,y*h,70,75,colisiones,main);
+        player=new Jugador(x*w,y*h,colisiones,main,w,h);
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
         terrainLayer2=(TiledMapTileLayer)mapLayers.get("objetos");

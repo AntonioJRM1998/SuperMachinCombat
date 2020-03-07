@@ -5,13 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.machine.Mapas.BaseScreen;
 import com.mygdx.machine.Mapas.MapaInicial;
+import com.mygdx.machine.Mapas.PantallaClick;
 
 public class Main extends Game {
     private BaseScreen screen;
 
 	@Override
 	public void create () {
-	    setPantallaActual(new MapaInicial(this,200,800));
+		setPantallaActual(new PantallaClick(this));
 	}
 
 	@Override
