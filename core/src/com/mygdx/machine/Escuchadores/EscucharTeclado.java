@@ -116,22 +116,12 @@ public class EscucharTeclado implements InputProcessor {
                 main.setPantallaActual(new MapaInicial(main, 100, 100));
             }
         }
-        if (screenX < Gdx.graphics.getWidth() / 2) {
-            keyDown('a');
-        }else if(screenX>Gdx.graphics.getWidth() / 2){
-            keyDown('d');
-        }
 
        return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (screenX < Gdx.graphics.getWidth() / 2) {
-            keyUp('a');
-        }else if(screenX>Gdx.graphics.getWidth() / 2){
-            keyUp('d');
-        }
         return false;
     }
 

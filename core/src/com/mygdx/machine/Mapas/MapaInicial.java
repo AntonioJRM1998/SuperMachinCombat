@@ -29,6 +29,9 @@ public class MapaInicial extends BaseScreen {
         private Main main;
         private Jugador player;
         private SpriteBatch batch;
+        private int button1=0;
+        private char letra;
+        private EscucharTeclado escucharTeclado;
     public MapaInicial(Main main,float x,float y) {
         super(main);
         this.main=main;
@@ -58,12 +61,14 @@ public class MapaInicial extends BaseScreen {
         Colisiones colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
         player=new Jugador(x*w,y/h,colisiones,main,w,h);
+        escucharTeclado=new EscucharTeclado(player);
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("muebles");
         decorationLayersIndices = new int[]{
                 mapLayers.getIndex("zonaAtras")
         };
+        stage=new Stage();
         TextureAtlas buttonAtlas = new TextureAtlas("recursos/buttons.pack");
         Skin buttonSkin=new Skin();
         buttonSkin.addRegions(buttonAtlas);
@@ -75,53 +80,58 @@ public class MapaInicial extends BaseScreen {
         miraAbajo.up=buttonSkin.getDrawable("downRemastered");
         miraDerecha.up=buttonSkin.getDrawable("rightRemastered");
         miraIzquierda.up=buttonSkin.getDrawable("leftRemastered");
-
-
-        ImageButton botonArriba = new ImageButton(miraArriba);
-        ImageButton botonAbajo = new ImageButton(miraAbajo);
+        final ImageButton botonArriba = new ImageButton(miraArriba);
+        final ImageButton botonAbajo = new ImageButton(miraAbajo);
         ImageButton botonIzquierda = new ImageButton(miraIzquierda);
         ImageButton botonDerecha = new ImageButton(miraDerecha);
         botonArriba.addListener(new ClickListener(){
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-
-                player.moverJugador('w');
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                hacerMovimiento('w');
                 player.hacerAnimaciones('w');
-
-
-                System.out.println(player.getX());
                 return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                player.pararPersonaje('w');
             }
         });
         botonAbajo.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-
-                player.moverJugador('s');
+                hacerMovimiento('s');
                 player.hacerAnimaciones('s');
-                System.out.println(player.getX());
                 return true;
+            }
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                player.pararPersonaje('s');
             }
         });
         botonDerecha.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-
-                player.moverJugador('d');
+                hacerMovimiento('d');
                 player.hacerAnimaciones('d');
-                System.out.println(player.getX());
                 return true;
+            }
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                player.pararPersonaje('d');
             }
         });
         botonIzquierda.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-
-                player.moverJugador('a');
+                hacerMovimiento('a');
                 player.hacerAnimaciones('a');
-                System.out.println(player.getX());
-
                 return true;
+            }
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                player.pararPersonaje('a');
             }
         });
 
@@ -133,7 +143,6 @@ public class MapaInicial extends BaseScreen {
         tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
-        stage=new Stage();
         stage.addActor(player);
         stage.addActor(tableBotones);
         stage.setDebugAll(true);
@@ -142,7 +151,9 @@ public class MapaInicial extends BaseScreen {
         }
         InputMultiplexer multiplexer=new InputMultiplexer();
         multiplexer.addProcessor(new EscucharTeclado(player));
-        Gdx.input.setInputProcessor(multiplexer);
+        multiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(stage);
+        //Gdx.input.setInputProcessor(multiplexer);
     }
 
 
@@ -151,6 +162,9 @@ public class MapaInicial extends BaseScreen {
         super.render(delta);
         renderer.setView(camera);
         camera.update();
+        if(Gdx.input.isButtonPressed(0)){
+            player.moverJugador(letra);
+        }
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
         renderer.renderTileLayer(terrainLayer2);
@@ -174,7 +188,22 @@ public class MapaInicial extends BaseScreen {
     public int getMapHeightInPixels() {
         return mapHeightInPixels;
     }
-
+    public void hacerMovimiento(char letra){
+        switch (letra){
+            case 'w':
+                this.letra='w';
+                break;
+            case 'd':
+                this.letra='d';
+            break;
+            case 's':
+                this.letra='s';
+            break;
+            case 'a':
+                this.letra='a';
+            break;
+        }
+    }
     public void dispose() {
         manager.dispose();
         stage.dispose();
