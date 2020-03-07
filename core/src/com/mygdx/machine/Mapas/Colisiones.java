@@ -11,15 +11,11 @@ import com.mygdx.machine.Personaje.Jugador;
 public class Colisiones {
     private Actor[] actores;
     private Rectangle[] rect;
-    private Rectangle jugador;
     private Rectangle[] salida;
     private RectangleMapObject[] obj2;
-    private float wEscalado,hEscalado
     ;
 
     public void checkCollision(TiledMap map, float w, float h) {
-        this.wEscalado=w;
-        this.hEscalado=h;
         MapObjects mons = map.getLayers().get("colisiones").getObjects();
         actores = new Actor[mons.getCount()];
         rect = new Rectangle[mons.getCount()];
@@ -59,11 +55,4 @@ public class Colisiones {
         return salida;
     }
 
-    public float gethEscalado() {
-        return hEscalado;
-    }
-
-    public float getwEscalado() {
-        return wEscalado;
-    }
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.machine.Main;
 import com.mygdx.machine.Mapas.Colisiones;
+import com.mygdx.machine.Mapas.MapaBichos;
 import com.mygdx.machine.Mapas.MapaInicial;
 import com.mygdx.machine.Mapas.MapaPlantaBaja;
 import com.mygdx.machine.Mapas.MapaPueblo;
@@ -68,7 +69,7 @@ public class Jugador extends Actor {
         switch (letra) {
             case 'w':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                    if(rectangles[b].overlaps(rectangle.set(x,y+2,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
                     }else{
@@ -76,9 +77,9 @@ public class Jugador extends Actor {
                     }
                 }
                 if(olision==false){
-                    System.out.println(colisiones.getSalida().length);
                     for(int b=0;b<colisiones.getSalida().length;b++){
                         if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y,AnchoJugador,largoJugador))){
+                            System.out.println("colisionando");
                             switch (colisiones.getObj2()[b].getName()){
                                 case "salidaBajo":
                                     main.dispose();
@@ -96,10 +97,14 @@ public class Jugador extends Actor {
                                     main.dispose();
                                     main.setPantallaActual(new MapaPlantaBaja(main,194,10));
                                     break;
+                                case "bichos":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaBichos(main,100,100));
+                                    break;
                             }
                         }
                     }
-                    y=y+9;
+                    y=y+2;
                 }else{
 
                 }
@@ -107,7 +112,7 @@ public class Jugador extends Actor {
                 break;
             case 's':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y-9,AnchoJugador,largoJugador))){
+                    if(rectangles[b].overlaps(rectangle.set(x,y-2,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
                     }else{
@@ -116,7 +121,8 @@ public class Jugador extends Actor {
                 }
                 if(olision==false){
                     for(int b=0;b<colisiones.getSalida().length;b++){
-                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y,AnchoJugador,largoJugador))){
+                            System.out.println("colisionando");
                             switch (colisiones.getObj2()[b].getName()){
                                 case "salidaBajo":
                                     main.dispose();
@@ -126,16 +132,27 @@ public class Jugador extends Actor {
                                     main.dispose();
                                     main.setPantallaActual(new MapaInicial(main,347,298));
                                     break;
+                                case "salida2":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPueblo(main,80,140));
+                                    break;
+                                case "miCasa":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPlantaBaja(main,194,10));
+                                    break;
+                                case "bichos":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaBichos(main,100,100));
                             }
                         }
                     }
 
-                    y=y-9;
+                    y=y-2;
                 }
                 break;
             case 'd':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x+9,y,AnchoJugador,largoJugador))){
+                    if(rectangles[b].overlaps(rectangle.set(x+2,y,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
                     }else{
@@ -144,7 +161,8 @@ public class Jugador extends Actor {
                 }
                 if(olision==false){
                     for(int b=0;b<colisiones.getSalida().length;b++){
-                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y,AnchoJugador,largoJugador))){
+                            System.out.println("colisionando");
                             switch (colisiones.getObj2()[b].getName()){
                                 case "salidaBajo":
                                     main.dispose();
@@ -154,15 +172,26 @@ public class Jugador extends Actor {
                                     main.dispose();
                                     main.setPantallaActual(new MapaInicial(main,347,298));
                                     break;
+                                case "salida2":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPueblo(main,80,140));
+                                    break;
+                                case "miCasa":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPlantaBaja(main,194,10));
+                                    break;
+                                case "bichos":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaBichos(main,100,100));
                             }
                         }
                     }
-                    x=x+9;
+                    x=x+2;
                 }
                 break;
             case 'a':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x-9,y,AnchoJugador,largoJugador))){
+                    if(rectangles[b].overlaps(rectangle.set(x-2,y,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
                     }else{
@@ -171,7 +200,8 @@ public class Jugador extends Actor {
                 }
                 if(olision==false){
                     for(int b=0;b<colisiones.getSalida().length;b++){
-                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
+                        if(colisiones.getSalida()[b].overlaps(rectangle.set(x,y,AnchoJugador,largoJugador))){
+                            System.out.println("colisionando"+colisiones.getObj2()[b].getName());
                             switch (colisiones.getObj2()[b].getName()){
                                 case "salidaBajo":
                                     main.dispose();
@@ -181,10 +211,21 @@ public class Jugador extends Actor {
                                     main.dispose();
                                     main.setPantallaActual(new MapaInicial(main,347,298));
                                     break;
+                                case "salida2":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPueblo(main,80,140));
+                                    break;
+                                case "miCasa":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPlantaBaja(main,194,10));
+                                    break;
+                                case "bichos":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaBichos(main,100,100));
                             }
                         }
                     }
-                    x=x-9;
+                    x=x-2;
                 }
                 break;
         }

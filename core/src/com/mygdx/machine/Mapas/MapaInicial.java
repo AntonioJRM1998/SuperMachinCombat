@@ -29,9 +29,6 @@ public class MapaInicial extends BaseScreen {
         private Main main;
         private Jugador player;
         private SpriteBatch batch;
-        private int button1=0;
-        private char letra;
-        private EscucharTeclado escucharTeclado;
     public MapaInicial(Main main,float x,float y) {
         super(main);
         this.main=main;
@@ -54,14 +51,11 @@ public class MapaInicial extends BaseScreen {
         camera.position.x = mapWidthInPixels/2;
         camera.position.y = mapHeightInPixels/2;
         w=w/mapWidthInPixels;
-        System.out.println(w);
         h=h/mapHeightInPixels;
-        System.out.println(h);
         batch=new SpriteBatch();
         Colisiones colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
         player=new Jugador(x*w,y/h,colisiones,main,w,h);
-        escucharTeclado=new EscucharTeclado(player);
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("muebles");
@@ -69,82 +63,8 @@ public class MapaInicial extends BaseScreen {
                 mapLayers.getIndex("zonaAtras")
         };
         stage=new Stage();
-        TextureAtlas buttonAtlas = new TextureAtlas("recursos/buttons.pack");
-        Skin buttonSkin=new Skin();
-        buttonSkin.addRegions(buttonAtlas);
-        ImageButton.ImageButtonStyle miraArriba=new ImageButton.ImageButtonStyle();
-        ImageButton.ImageButtonStyle miraAbajo=new ImageButton.ImageButtonStyle();
-        ImageButton.ImageButtonStyle miraIzquierda=new ImageButton.ImageButtonStyle();
-        ImageButton.ImageButtonStyle miraDerecha=new ImageButton.ImageButtonStyle();
-        miraArriba.up=buttonSkin.getDrawable("upRemastered");
-        miraAbajo.up=buttonSkin.getDrawable("downRemastered");
-        miraDerecha.up=buttonSkin.getDrawable("rightRemastered");
-        miraIzquierda.up=buttonSkin.getDrawable("leftRemastered");
-        final ImageButton botonArriba = new ImageButton(miraArriba);
-        final ImageButton botonAbajo = new ImageButton(miraAbajo);
-        ImageButton botonIzquierda = new ImageButton(miraIzquierda);
-        ImageButton botonDerecha = new ImageButton(miraDerecha);
-        botonArriba.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                hacerMovimiento('w');
-                player.hacerAnimaciones('w');
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                player.pararPersonaje('w');
-            }
-        });
-        botonAbajo.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                hacerMovimiento('s');
-                player.hacerAnimaciones('s');
-                return true;
-            }
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                player.pararPersonaje('s');
-            }
-        });
-        botonDerecha.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                hacerMovimiento('d');
-                player.hacerAnimaciones('d');
-                return true;
-            }
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                player.pararPersonaje('d');
-            }
-        });
-        botonIzquierda.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                hacerMovimiento('a');
-                player.hacerAnimaciones('a');
-                return true;
-            }
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                player.pararPersonaje('a');
-            }
-        });
-
-        Table tableBotones = new Table();
-        tableBotones.bottom();
-        tableBotones.debug();
-        tableBotones.setFillParent(true);
-        tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 6f).width(Gdx.graphics.getWidth() / 18.9666f);
-        tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
-        tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
-        tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         stage.addActor(player);
-        stage.addActor(tableBotones);
+        stage.addActor(botonesMover(player));
         stage.setDebugAll(true);
         for(int c=0;c<colisiones.getRect().length;c++){
             stage.addActor(colisiones.getActores()[c]);
@@ -153,7 +73,6 @@ public class MapaInicial extends BaseScreen {
         multiplexer.addProcessor(new EscucharTeclado(player));
         multiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(stage);
-        //Gdx.input.setInputProcessor(multiplexer);
     }
 
 
@@ -162,8 +81,8 @@ public class MapaInicial extends BaseScreen {
         super.render(delta);
         renderer.setView(camera);
         camera.update();
-        if(Gdx.input.isButtonPressed(0)){
-            player.moverJugador(letra);
+        if(Gdx.input.isButtonPressed(0)&&!getaBoolean()){
+            player.moverJugador(getLetra());
         }
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
@@ -187,22 +106,6 @@ public class MapaInicial extends BaseScreen {
 
     public int getMapHeightInPixels() {
         return mapHeightInPixels;
-    }
-    public void hacerMovimiento(char letra){
-        switch (letra){
-            case 'w':
-                this.letra='w';
-                break;
-            case 'd':
-                this.letra='d';
-            break;
-            case 's':
-                this.letra='s';
-            break;
-            case 'a':
-                this.letra='a';
-            break;
-        }
     }
     public void dispose() {
         manager.dispose();

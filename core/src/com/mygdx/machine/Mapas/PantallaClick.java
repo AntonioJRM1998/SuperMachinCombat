@@ -42,7 +42,7 @@ public class PantallaClick extends BaseScreen {
         stage.draw();
     }
     public void pasaPantalla(){
-        main.setPantallaActual(new MapaInicial(main,100,100));
+        main.setPantallaActual(new MapaInicial(main,0,0));
     }
 
     public Actor getActor() {

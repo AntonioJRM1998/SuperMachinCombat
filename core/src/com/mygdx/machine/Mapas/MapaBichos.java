@@ -16,20 +16,18 @@ import com.mygdx.machine.Escuchadores.EscucharTeclado;
 import com.mygdx.machine.Main;
 import com.mygdx.machine.Personaje.Jugador;
 
-public class MapaPueblo extends BaseScreen {
-    private Main maind;
+public class MapaBichos extends BaseScreen {
     private Jugador player;
     private SpriteBatch batch;
-    public MapaPueblo(Main main,float x,float y) {
+    public MapaBichos(Main main,float x,float y) {
         super(main);
-        this.maind = main;
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader());
-        manager.load("mapas/MapaPueblo.tmx", TiledMap.class);
+        manager.load("mapas/MapaEntrenamiento.tmx", TiledMap.class);
         manager.finishLoading();
-        map = manager.get("mapas/MapaPueblo.tmx", TiledMap.class);
+        map = manager.get("mapas/MapaEntrenamiento.tmx", TiledMap.class);
         MapProperties properties = map.getProperties();
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
@@ -51,42 +49,32 @@ public class MapaPueblo extends BaseScreen {
         player = new Jugador(x * w,y*h,colisiones, main,w,h);
         MapLayers mapLayers = map.getLayers();
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
-        terrainLayer2 = (TiledMapTileLayer) mapLayers.get("cosas");
+        terrainLayer2 = (TiledMapTileLayer) mapLayers.get("objetos");
         decorationLayersIndices = new int[]{
-                mapLayers.getIndex("casas")
+                mapLayers.getIndex("zonaAtras")
         };
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(new EscucharTeclado(player));
+        Gdx.input.setInputProcessor(multiplexer);
         stage = new Stage();
         stage.addActor(player);
-        stage.addActor(botonesMover(player));
         stage.setDebugAll(true);
         for (int c = 0; c < colisiones.getRect().length; c++) {
             stage.addActor(colisiones.getActores()[c]);
         }
-        InputMultiplexer multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(new EscucharTeclado(player));
-        Gdx.input.setInputProcessor(stage);
     }
-        public void render ( float delta){
-            super.render(delta);
-            renderer.setView(camera);
-            camera.update();
-            if(Gdx.input.isButtonPressed(0)&&!getaBoolean()){
-                player.moverJugador(getLetra());
-            }
-            renderer.getBatch().begin();
-            renderer.renderTileLayer(terrainLayer);
-            renderer.renderTileLayer(terrainLayer2);
-            renderer.getBatch().end();
-            batch.begin();
-            player.render(batch);
-            batch.end();
-            renderer.render(decorationLayersIndices);
-            stage.draw();
-        }
-    public void dispose() {
-        manager.dispose();
-        stage.dispose();
-        renderer.dispose();
+    public void render ( float delta){
+        super.render(delta);
+        renderer.setView(camera);
+        camera.update();
+        renderer.getBatch().begin();
+        renderer.renderTileLayer(terrainLayer);
+        renderer.renderTileLayer(terrainLayer2);
+        renderer.getBatch().end();
+        batch.begin();
+        player.render(batch);
+        batch.end();
+        renderer.render(decorationLayersIndices);
+        stage.draw();
     }
-
 }

@@ -55,13 +55,14 @@ public class MapaPlantaBaja extends BaseScreen {
         };
         stage=new Stage();
         stage.addActor(player);
+        stage.addActor(botonesMover(player));
         stage.setDebugAll(true);
         for(int c=0;c<colisiones.getRect().length;c++){
             stage.addActor(colisiones.getActores()[c]);
         }
         InputMultiplexer multiplexer=new InputMultiplexer();
         multiplexer.addProcessor(new EscucharTeclado(player));
-        Gdx.input.setInputProcessor(multiplexer);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -69,6 +70,9 @@ public class MapaPlantaBaja extends BaseScreen {
         super.render(delta);
         renderer.setView(camera);
         camera.update();
+        if(Gdx.input.isButtonPressed(0)&&!getaBoolean()){
+            player.moverJugador(getLetra());
+        }
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
         renderer.renderTileLayer(terrainLayer2);
@@ -79,6 +83,11 @@ public class MapaPlantaBaja extends BaseScreen {
         renderer.render(decorationLayersIndices);
         stage.draw();
 
+    }
+    public void dispose() {
+        manager.dispose();
+        stage.dispose();
+        renderer.dispose();
     }
 
 }
