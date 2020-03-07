@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,7 +15,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.machine.Escuchadores.EscucharTeclado;
 import com.mygdx.machine.Main;
 import com.mygdx.machine.Personaje.Jugador;
@@ -58,15 +64,85 @@ public class MapaInicial extends BaseScreen {
         decorationLayersIndices = new int[]{
                 mapLayers.getIndex("zonaAtras")
         };
-        InputMultiplexer multiplexer=new InputMultiplexer();
-        multiplexer.addProcessor(new EscucharTeclado(player));
-        Gdx.input.setInputProcessor(multiplexer);
+        TextureAtlas buttonAtlas = new TextureAtlas("recursos/buttons.pack");
+        Skin buttonSkin=new Skin();
+        buttonSkin.addRegions(buttonAtlas);
+        ImageButton.ImageButtonStyle miraArriba=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraAbajo=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraIzquierda=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraDerecha=new ImageButton.ImageButtonStyle();
+        miraArriba.up=buttonSkin.getDrawable("upRemastered");
+        miraAbajo.up=buttonSkin.getDrawable("downRemastered");
+        miraDerecha.up=buttonSkin.getDrawable("rightRemastered");
+        miraIzquierda.up=buttonSkin.getDrawable("leftRemastered");
+
+
+        ImageButton botonArriba = new ImageButton(miraArriba);
+        ImageButton botonAbajo = new ImageButton(miraAbajo);
+        ImageButton botonIzquierda = new ImageButton(miraIzquierda);
+        ImageButton botonDerecha = new ImageButton(miraDerecha);
+        botonArriba.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                player.moverJugador('w');
+                player.hacerAnimaciones('w');
+
+
+                System.out.println(player.getX());
+                return true;
+            }
+        });
+        botonAbajo.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                player.moverJugador('s');
+                player.hacerAnimaciones('s');
+                System.out.println(player.getX());
+                return true;
+            }
+        });
+        botonDerecha.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                player.moverJugador('d');
+                player.hacerAnimaciones('d');
+                System.out.println(player.getX());
+                return true;
+            }
+        });
+        botonIzquierda.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                player.moverJugador('a');
+                player.hacerAnimaciones('a');
+                System.out.println(player.getX());
+
+                return true;
+            }
+        });
+
+        Table tableBotones = new Table();
+        tableBotones.bottom();
+        tableBotones.debug();
+        tableBotones.setFillParent(true);
+        tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 6f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         stage=new Stage();
         stage.addActor(player);
+        stage.addActor(tableBotones);
         stage.setDebugAll(true);
         for(int c=0;c<colisiones.getRect().length;c++){
             stage.addActor(colisiones.getActores()[c]);
         }
+        InputMultiplexer multiplexer=new InputMultiplexer();
+        multiplexer.addProcessor(new EscucharTeclado(player));
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
 

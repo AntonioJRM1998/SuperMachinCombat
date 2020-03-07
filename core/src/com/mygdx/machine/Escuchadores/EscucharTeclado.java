@@ -1,5 +1,6 @@
 package com.mygdx.machine.Escuchadores;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
@@ -115,16 +116,28 @@ public class EscucharTeclado implements InputProcessor {
                 main.setPantallaActual(new MapaInicial(main, 100, 100));
             }
         }
+        if (screenX < Gdx.graphics.getWidth() / 2) {
+            keyDown('a');
+        }else if(screenX>Gdx.graphics.getWidth() / 2){
+            keyDown('d');
+        }
+
        return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (screenX < Gdx.graphics.getWidth() / 2) {
+            keyUp('a');
+        }else if(screenX>Gdx.graphics.getWidth() / 2){
+            keyUp('d');
+        }
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+
         return false;
     }
 

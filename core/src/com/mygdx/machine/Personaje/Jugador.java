@@ -67,7 +67,7 @@ public class Jugador extends Actor {
     public void moverJugador(char letra) {
         switch (letra) {
             case 'w':
-                for(int b=0;b<rectangles.length-1;b++){
+                for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y+9,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
@@ -106,7 +106,7 @@ public class Jugador extends Actor {
 
                 break;
             case 's':
-                for(int b=0;b<rectangles.length-1;b++){
+                for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y-9,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
@@ -134,7 +134,7 @@ public class Jugador extends Actor {
                 }
                 break;
             case 'd':
-                for(int b=0;b<rectangles.length-1;b++){
+                for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x+9,y,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
@@ -161,7 +161,7 @@ public class Jugador extends Actor {
                 }
                 break;
             case 'a':
-                for(int b=0;b<rectangles.length-1;b++){
+                for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x-9,y,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
