@@ -69,7 +69,7 @@ public class Jugador extends Actor {
         switch (letra) {
             case 'w':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y+2,AnchoJugador,largoJugador))){
+                    if(rectangles[b].overlaps(rectangle.set(x,y+3,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
                     }else{
@@ -104,7 +104,7 @@ public class Jugador extends Actor {
                             }
                         }
                     }
-                    y=y+2;
+                    y=y+3;
                 }else{
 
                 }
@@ -112,7 +112,7 @@ public class Jugador extends Actor {
                 break;
             case 's':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y-2,AnchoJugador,largoJugador))){
+                    if(rectangles[b].overlaps(rectangle.set(x,y-3,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
                     }else{
@@ -147,12 +147,12 @@ public class Jugador extends Actor {
                         }
                     }
 
-                    y=y-2;
+                    y=y-3;
                 }
                 break;
             case 'd':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x+2,y,AnchoJugador,largoJugador))){
+                    if(rectangles[b].overlaps(rectangle.set(x+3,y,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
                     }else{
@@ -174,28 +174,25 @@ public class Jugador extends Actor {
                                     break;
                                 case "salida2":
                                     main.dispose();
-                                    main.pararMusica();
                                     main.getScreen().dispose();
                                     main.setPantallaActual(new MapaPueblo(main,80,140));
                                     break;
                                 case "miCasa":
                                     main.dispose();
-                                    main.pararMusica();
                                     main.setPantallaActual(new MapaPlantaBaja(main,194,10));
                                     break;
                                 case "bichos":
                                     main.dispose();
-                                    main.pararMusica();
                                     main.setPantallaActual(new MapaBichos(main,100,100));
                             }
                         }
                     }
-                    x=x+2;
+                    x=x+3;
                 }
                 break;
             case 'a':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x-2,y,AnchoJugador,largoJugador))){
+                    if(rectangles[b].overlaps(rectangle.set(x-3,y,AnchoJugador,largoJugador))){
                         olision=true;
                         break;
                     }else{
@@ -226,10 +223,14 @@ public class Jugador extends Actor {
                                 case "bichos":
                                     main.dispose();
                                     main.setPantallaActual(new MapaBichos(main,100,100));
+                                case "salidaPuebloBichos":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPueblo(main,196,22));
+                                    break;
                             }
                         }
                     }
-                    x=x-2;
+                    x=x-3;
                 }
                 break;
         }

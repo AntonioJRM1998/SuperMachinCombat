@@ -78,7 +78,6 @@ public class BaseScreen implements Screen {
         manager.dispose();
         renderer.dispose();
         stage.dispose();
-        musicaMapa1.dispose();
     }
     public Actor botonesMover(final Jugador player){
         TextureAtlas buttonAtlas = new TextureAtlas("recursos/buttons.pack");
@@ -194,13 +193,4 @@ public class BaseScreen implements Screen {
         return letra;
     }
 
-    public Music getMusicaMapa1() {
-        return musicaMapa1;
-    }
-    public void ponerMuscia(String ruta){
-        musicaMapa1=Gdx.audio.newMusic(Gdx.files.internal(ruta));
-        musicaMapa1.play();
-        musicaMapa1.setVolume(1.0f);
-        musicaMapa1.setLooping(true);
-    }
 }

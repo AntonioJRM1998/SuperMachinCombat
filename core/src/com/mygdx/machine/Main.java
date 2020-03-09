@@ -2,10 +2,8 @@ package com.mygdx.machine;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.machine.Mapas.BaseScreen;
-import com.mygdx.machine.Mapas.MapaInicial;
 import com.mygdx.machine.Mapas.PantallaClick;
 
 public class Main extends Game {
@@ -14,6 +12,7 @@ public class Main extends Game {
 	@Override
 	public void create () {
 		setPantallaActual(new PantallaClick(this));
+        System.out.println("illo");
 	}
 
 	@Override
@@ -37,8 +36,4 @@ public class Main extends Game {
 	    this.screen=screen;
 	    setScreen(this.screen);
     }
-    public void pararMusica(){
-		screen.getMusicaMapa1().stop();
-		screen.getMusicaMapa1().dispose();
-	}
 }

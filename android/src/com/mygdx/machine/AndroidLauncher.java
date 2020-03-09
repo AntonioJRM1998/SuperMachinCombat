@@ -1,5 +1,7 @@
 package com.mygdx.machine;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Display;
 
@@ -15,11 +17,25 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new Main(), config);
 	}
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alert=new AlertDialog.Builder(this);
+        alert.setMessage("¿Quieres salir de SuperMachineCombat?");
 
-	@Override
-	protected void onStop() {
-		super.onStop();
-		Main main=new Main();
-		main.pararMusica();
-	}
+        alert.setCancelable(false);
+        alert.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alert.show();
+    }
 }

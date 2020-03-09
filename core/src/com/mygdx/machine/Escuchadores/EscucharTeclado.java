@@ -52,8 +52,6 @@ public class EscucharTeclado implements InputProcessor {
         if(pantallaInicio==false) {
             if (pantallaClick.getRectangle().x <= screenX) {
                 pantallaInicio=true;
-                main.pararMusica();
-                main.getScreen().ponerMuscia("musica/musicaCasa.mp3");
                 main.setPantallaActual(new MapaInicial(main, 100, 100));
             }
         }

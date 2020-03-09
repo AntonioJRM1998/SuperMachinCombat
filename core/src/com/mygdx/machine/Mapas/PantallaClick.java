@@ -20,6 +20,9 @@ public class PantallaClick extends BaseScreen {
     public PantallaClick(Main main) {
         super(main);
         batch=new SpriteBatch();
+        musicaMapa1=Gdx.audio.newMusic(Gdx.files.internal("musica/musicaInicio.mp3"));
+        musicaMapa1.setVolume(1.0f);
+        musicaMapa1.setLooping(true);
         ttrSplash = new Texture("recursos/titulo.png");
         rectangle=new Rectangle();
         rectangle.set(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -42,6 +45,18 @@ public class PantallaClick extends BaseScreen {
         batch.draw(ttrSplash, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
         stage.draw();
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        musicaMapa1.play();
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+        musicaMapa1.stop();
     }
 
     public Actor getActor() {
