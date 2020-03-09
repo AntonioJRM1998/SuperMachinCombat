@@ -15,4 +15,11 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new Main(), config);
 	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Main main=new Main();
+		main.pararMusica();
+	}
 }

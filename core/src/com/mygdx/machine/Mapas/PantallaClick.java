@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.machine.Escuchadores.EscucharTeclado;
 import com.mygdx.machine.Main;
-import com.mygdx.machine.Personaje.Jugador;
 
 
 public class PantallaClick extends BaseScreen {
@@ -32,6 +31,9 @@ public class PantallaClick extends BaseScreen {
         InputMultiplexer multiplexer=new InputMultiplexer();
         multiplexer.addProcessor(new EscucharTeclado(this,main));
         Gdx.input.setInputProcessor(multiplexer);
+        musicaMapa1=Gdx.audio.newMusic(Gdx.files.internal("musica/musicaInicio.mp3"));
+        musicaMapa1.play();
+        musicaMapa1.setLooping(true);
     }
     @Override
     public void render(float delta) {
@@ -41,9 +43,6 @@ public class PantallaClick extends BaseScreen {
         batch.end();
         stage.draw();
     }
-    public void pasaPantalla(){
-        main.setPantallaActual(new MapaInicial(main,0,0));
-    }
 
     public Actor getActor() {
         return actor;
@@ -51,5 +50,11 @@ public class PantallaClick extends BaseScreen {
 
     public Rectangle getRectangle() {
         return rectangle;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        musicaMapa1.dispose();
     }
 }

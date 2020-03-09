@@ -2,6 +2,27 @@
 <map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="68">
  <tileset firstgid="1" name="Overworld" tilewidth="16" tileheight="16" tilecount="1440" columns="40">
   <image source="../recursos/Overworld.png" width="640" height="576"/>
+  <tile id="377">
+   <animation>
+    <frame tileid="377" duration="100"/>
+    <frame tileid="417" duration="100"/>
+    <frame tileid="458" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="378">
+   <animation>
+    <frame tileid="378" duration="100"/>
+    <frame tileid="418" duration="100"/>
+    <frame tileid="459" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="379">
+   <animation>
+    <frame tileid="379" duration="100"/>
+    <frame tileid="419" duration="100"/>
+    <frame tileid="460" duration="100"/>
+   </animation>
+  </tile>
   <tile id="383">
    <animation>
     <frame tileid="386" duration="100"/>

@@ -3,10 +3,8 @@ package com.mygdx.machine.Mapas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -25,7 +23,7 @@ import com.mygdx.machine.Personaje.Jugador;
 public class BaseScreen implements Screen {
     protected TiledMap map;
     protected Main main;
-    private char letra;
+    protected char letra;
     protected AssetManager manager;
     protected int tileWidth, tileHeight,
             mapWidthInTiles, mapHeightInTiles,
@@ -38,11 +36,11 @@ public class BaseScreen implements Screen {
     protected int[] decorationLayersIndices;
     protected float w,h;
     protected Stage stage;
-    private boolean aBoolean;
+    protected boolean aBoolean;
+    protected Music musicaMapa1;
 
     public BaseScreen(Main main){
         this.main=main;
-
     }
 
     @Override
@@ -80,6 +78,7 @@ public class BaseScreen implements Screen {
         manager.dispose();
         renderer.dispose();
         stage.dispose();
+        musicaMapa1.dispose();
     }
     public Actor botonesMover(final Jugador player){
         TextureAtlas buttonAtlas = new TextureAtlas("recursos/buttons.pack");
@@ -100,9 +99,9 @@ public class BaseScreen implements Screen {
         botonArriba.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                setaBoolean(false);
-                letra=hacerMovimiento('w');
-                player.hacerAnimaciones('w');
+                    setaBoolean(false);
+                    letra = hacerMovimiento('w');
+                    player.hacerAnimaciones('w');
                 return true;
             }
 
@@ -157,13 +156,14 @@ public class BaseScreen implements Screen {
         });
 
         Table tableBotones = new Table();
+        tableBotones.setPosition(0,0);
         tableBotones.bottom();
         tableBotones.debug();
         tableBotones.setFillParent(true);
-        tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 6f).width(Gdx.graphics.getWidth() / 18.9666f);
-        tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
-        tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
-        tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
+        tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
+        tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
+        tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
         return tableBotones;
     }
     public char hacerMovimiento(char letra){
@@ -192,5 +192,15 @@ public class BaseScreen implements Screen {
 
     public char getLetra() {
         return letra;
+    }
+
+    public Music getMusicaMapa1() {
+        return musicaMapa1;
+    }
+    public void ponerMuscia(String ruta){
+        musicaMapa1=Gdx.audio.newMusic(Gdx.files.internal(ruta));
+        musicaMapa1.play();
+        musicaMapa1.setVolume(1.0f);
+        musicaMapa1.setLooping(true);
     }
 }

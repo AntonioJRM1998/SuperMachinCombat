@@ -2,6 +2,7 @@ package com.mygdx.machine;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.machine.Mapas.BaseScreen;
 import com.mygdx.machine.Mapas.MapaInicial;
@@ -26,8 +27,18 @@ public class Main extends Game {
 	public void dispose () {
 		screen.dispose();
 	}
+
+	@Override
+	public BaseScreen getScreen() {
+		return screen;
+	}
+
 	public void setPantallaActual(BaseScreen screen){
 	    this.screen=screen;
 	    setScreen(this.screen);
     }
+    public void pararMusica(){
+		screen.getMusicaMapa1().stop();
+		screen.getMusicaMapa1().dispose();
+	}
 }

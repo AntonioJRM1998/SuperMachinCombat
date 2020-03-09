@@ -174,14 +174,18 @@ public class Jugador extends Actor {
                                     break;
                                 case "salida2":
                                     main.dispose();
+                                    main.pararMusica();
+                                    main.getScreen().dispose();
                                     main.setPantallaActual(new MapaPueblo(main,80,140));
                                     break;
                                 case "miCasa":
                                     main.dispose();
+                                    main.pararMusica();
                                     main.setPantallaActual(new MapaPlantaBaja(main,194,10));
                                     break;
                                 case "bichos":
                                     main.dispose();
+                                    main.pararMusica();
                                     main.setPantallaActual(new MapaBichos(main,100,100));
                             }
                         }
@@ -392,16 +396,5 @@ public class Jugador extends Actor {
         return y;
     }
 
-    public float getAnchoJugador() {
-        return AnchoJugador;
-    }
-
-    public float getLargoJugador() {
-        return largoJugador;
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
 
 }

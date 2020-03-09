@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -20,6 +21,7 @@ public class MapaPlantaBaja extends BaseScreen {
     private Main main;
     private Jugador player;
     private SpriteBatch batch;
+    private Boolean pulsarSolo=true;
     public MapaPlantaBaja(Main main,float x,float y){
         super(main);
         this.main=main;

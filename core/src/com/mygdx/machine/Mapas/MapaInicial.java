@@ -2,12 +2,10 @@ package com.mygdx.machine.Mapas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -15,18 +13,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.machine.Escuchadores.EscucharTeclado;
 import com.mygdx.machine.Main;
 import com.mygdx.machine.Personaje.Jugador;
 
 public class MapaInicial extends BaseScreen {
-        private Main main;
         private Jugador player;
         private SpriteBatch batch;
     public MapaInicial(Main main,float x,float y) {
@@ -73,6 +65,7 @@ public class MapaInicial extends BaseScreen {
         multiplexer.addProcessor(new EscucharTeclado(player));
         multiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(stage);
+
     }
 
 
@@ -95,37 +88,10 @@ public class MapaInicial extends BaseScreen {
         stage.draw();
     }
 
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
-    public int getMapWidthInPixels() {
-        return mapWidthInPixels;
-    }
-
-    public int getMapHeightInPixels() {
-        return mapHeightInPixels;
-    }
     public void dispose() {
         manager.dispose();
         stage.dispose();
         renderer.dispose();
     }
 
-    public TiledMap getMap() {
-        return map;
-    }
-
-    public float getW() {
-        return w;
-    }
-
-    public float getH() {
-        return h;
-    }
-
-    public Rectangle getRect1() {
-        return rect1;
-    }
 }

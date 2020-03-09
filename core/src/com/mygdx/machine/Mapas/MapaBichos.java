@@ -53,20 +53,24 @@ public class MapaBichos extends BaseScreen {
         decorationLayersIndices = new int[]{
                 mapLayers.getIndex("zonaAtras")
         };
-        InputMultiplexer multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(new EscucharTeclado(player));
-        Gdx.input.setInputProcessor(multiplexer);
         stage = new Stage();
         stage.addActor(player);
+        stage.addActor(botonesMover(player));
         stage.setDebugAll(true);
         for (int c = 0; c < colisiones.getRect().length; c++) {
             stage.addActor(colisiones.getActores()[c]);
         }
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(new EscucharTeclado(player));
+        Gdx.input.setInputProcessor(stage);
     }
     public void render ( float delta){
         super.render(delta);
         renderer.setView(camera);
         camera.update();
+        if(Gdx.input.isButtonPressed(0)&&!getaBoolean()){
+            player.moverJugador(getLetra());
+        }
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
         renderer.renderTileLayer(terrainLayer2);
