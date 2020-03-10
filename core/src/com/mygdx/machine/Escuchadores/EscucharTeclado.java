@@ -27,6 +27,12 @@ public class EscucharTeclado implements InputProcessor {
         pantallaInicio=true;
 
     }
+
+    /**
+     * Este constructor solo lo uso para la pantalla inical
+     * @param pantallaClick le paso la pantalla inicial
+     * @param main le paso el main
+     */
     public EscucharTeclado(PantallaClick pantallaClick,Main main){
         super();
         this.pantallaClick=pantallaClick;
@@ -49,11 +55,14 @@ public class EscucharTeclado implements InputProcessor {
     }
 
     @Override
+    /**
+     * Esta funcion se encarga de pasar de pantalla al hacerle click
+     */
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(pantallaInicio==false) {
             if (pantallaClick.getRectangle().x <= screenX) {
-                pantallaInicio=true;
-                main.setPantallaActual(new MapaInicial(main, 100, 100,main.getScreen().getBd()));
+                pantallaInicio=true;//La convierto en true para no poder volver a entrar a este if
+                main.setPantallaActual(new MapaInicial(main, 100, 100,main.getScreen().getBd()));//Inicio el mapa Principal
             }
         }
 

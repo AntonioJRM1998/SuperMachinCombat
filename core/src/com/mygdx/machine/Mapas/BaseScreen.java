@@ -22,7 +22,7 @@ import com.mygdx.machine.Personaje.Jugador;
 import com.mygdx.machine.basedatos.BaseDatosJuego;
 
 public class BaseScreen implements Screen {
-    protected TiledMap map;
+    protected TiledMap map;//Variable que uso para el mapa
     protected Main main;
     protected char letra;//Variable que guarda una letra que uso despues en el movimiento
     protected AssetManager manager;//Con esto cargo el mapa
@@ -36,12 +36,11 @@ public class BaseScreen implements Screen {
     protected int[] decorationLayersIndices;//Array que carga tambien capas
     protected float w,h;//Lo uso para guardar el reescalado que consiguo dividiendo el tamaño de la pantala entre el tamaño del mapa
     protected Stage stage;//Cargo mis actores
-    protected boolean aBoolean;
-    protected BitmapFont puntuacion;
-    protected int bichoMatado;
-    protected int unaVez;
-    protected BaseDatosJuego bd;
-    protected Music musicaMapa1;//Cargo la musica de mi mapa
+    protected boolean aBoolean;//Variable que uso para conseguir que el personaje se mueva cuando mantenga pulsado el boton
+    protected BitmapFont puntuacion;//Variable tipo bitmap
+    protected int bichoMatado;//Variable que uso para guardar la puntuacion
+    protected BaseDatosJuego bd;//Variable tipo BaseDatosJuego
+    protected Music musicaMapa1;//Variable de la musica de mi mapa
     protected boolean quitarVida;
 
     /**
@@ -96,8 +95,8 @@ public class BaseScreen implements Screen {
      * Esta funcion se encarga de guardar el movimiento que queremos hacer al pulsar uno de los botones
      */
     public Actor botonesMover(final Jugador player){
-        TextureAtlas buttonAtlas = new TextureAtlas("recursos/buttons.pack");
-        Skin buttonSkin=new Skin();
+        TextureAtlas buttonAtlas = new TextureAtlas("recursos/buttons.pack");//
+        Skin buttonSkin=new Skin();//Un subtipo de Skinnable que representa la Skin. Esto permite que la implementación de Skin acceda a la implementación de Skin, que generalmente es una Controlimplementación.
         buttonSkin.addRegions(buttonAtlas);
         ImageButton.ImageButtonStyle miraArriba=new ImageButton.ImageButtonStyle();
         ImageButton.ImageButtonStyle miraAbajo=new ImageButton.ImageButtonStyle();
@@ -117,85 +116,84 @@ public class BaseScreen implements Screen {
         botonArriba.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    setaBoolean(false);
-                    letra = hacerMovimiento('w');
-                    player.hacerAnimaciones('w');
+                    setaBoolean(false);//False=movimiento Continuio mientras pulsas
+                    letra = hacerMovimiento('w');//LLamo a la funcion de hacer movimiento y guardo la letra correspondiente a esa accion
+                    player.hacerAnimaciones('w');//Se encarga de hacer la animacion
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                setaBoolean(true);
-                player.pararPersonaje('w');
+                setaBoolean(true);//Truer=para movimiento Continuio cuando dejas de pulsar
+                player.pararPersonaje('w');//Se encarga de hacer la animacion de pararse hacia donde mira
             }
         });
         botonAbajo.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                setaBoolean(false);
-                letra=hacerMovimiento('s');
-                player.hacerAnimaciones('s');
+                setaBoolean(false);//False=movimiento Continuio mientras pulsas
+                letra=hacerMovimiento('s');//LLamo a la funcion de hacer movimiento y guardo la letra correspondiente a esa accion
+                player.hacerAnimaciones('s');//Se encarga de hacer la animacion
                 return true;
             }
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                setaBoolean(true);
                 super.touchUp(event, x, y, pointer, button);
-                player.pararPersonaje('s');
+                setaBoolean(true);//Truer=para movimiento Continuio cuando dejas de pulsar
+                player.pararPersonaje('s');//Se encarga de hacer la animacion de pararse hacia donde mira
             }
         });
         botonDerecha.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                setaBoolean(false);
-                letra=hacerMovimiento('d');
-                player.hacerAnimaciones('d');
+                setaBoolean(false);//False=movimiento Continuio mientras pulsas
+                letra=hacerMovimiento('d');//LLamo a la funcion de hacer movimiento y guardo la letra correspondiente a esa accion
+                player.hacerAnimaciones('d');//Se encarga de hacer la animacion
                 return true;
             }
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                setaBoolean(true);
                 super.touchUp(event, x, y, pointer, button);
-                player.pararPersonaje('d');
+                setaBoolean(true);//Truer=para movimiento Continuio cuando dejas de pulsar
+                player.pararPersonaje('d');//Se encarga de hacer la animacion de pararse hacia donde mira
             }
         });
         botonIzquierda.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                setaBoolean(false);
-                letra=hacerMovimiento('a');
-                player.hacerAnimaciones('a');
+                setaBoolean(false);//False=movimiento Continuio mientras pulsas
+                letra=hacerMovimiento('a');//LLamo a la funcion de hacer movimiento y guardo la letra correspondiente a esa accion
+                player.hacerAnimaciones('a');//Se encarga de hacer la animacion
                 return true;
             }
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                setaBoolean(true);
                 super.touchUp(event, x, y, pointer, button);
-                player.pararPersonaje('a');
+                setaBoolean(true);//Truer=para movimiento Continuio cuando dejas de pulsar
+                player.pararPersonaje('a');//Se encarga de hacer la animacion de pararse hacia donde mira
             }
         });
         botonAtacar.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                quitarVida=true;
-                player.atacar();
+                quitarVida=true;//Uso este boolean para que me cuente puntos solo cuando le doy a este boton
+                player.atacar();//Hace la animacion de atacar
                 return true;
             }
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                quitarVida=false;
-                player.pararJugador();
+                quitarVida=false;//Uso este boolean para que deje de contar puntos cuando dejo de pulsarlo
+                player.pararJugador();//Paro el jugador en la posicion en la que mira
             }
         });
 
 
-        Table tableBotones = new Table();
-        tableBotones.setPosition(0,0);
-        tableBotones.bottom();
-        tableBotones.debug();
+        Table tableBotones = new Table();//Crea una tabla para los botones
+        tableBotones.bottom();//Le asigno su posicion
+        tableBotones.debug();//Sirve para ver los margenes
         tableBotones.setFillParent(true);
-        tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
-        tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
-        tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
-        tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
-        tableBotones.add(botonAtacar).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);
+        tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);//Añado el boton a la tabla y le asigno una anchura y altura
+        tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);//Añado el boton a la tabla y le asigno una anchura y altura
+        tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);//Añado el boton a la tabla y le asigno una anchura y altura
+        tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);//Añado el boton a la tabla y le asigno una anchura y altura
+        tableBotones.add(botonAtacar).height(Gdx.graphics.getHeight() / 7f).width(Gdx.graphics.getWidth() / 15f);//Añado el boton a la tabla y le asigno una anchura y altura
         return tableBotones;
     }
 
