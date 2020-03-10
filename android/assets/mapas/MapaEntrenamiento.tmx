@@ -83,7 +83,6 @@
   <object id="14" x="323.596" y="83.9234" width="75.4261" height="41.7043"/>
   <object id="15" x="224.997" y="181.233" width="14.4163" height="4.63381"/>
   <object id="17" x="214.5" y="109" width="19.5" height="14"/>
-  <object id="18" x="-0.75" y="241" width="253" height="10.5"/>
  </objectgroup>
  <objectgroup id="5" name="salidas">
   <object id="16" name="salidaPuebloBichos" x="0" y="238.898" width="252.285" height="13.9014"/>

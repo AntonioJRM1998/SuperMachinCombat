@@ -5,9 +5,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.machine.Mapas.BaseScreen;
 import com.mygdx.machine.Mapas.PantallaClick;
+import com.mygdx.machine.basedatos.BaseDatosJuego;
 
 public class Main extends Game {
     private BaseScreen screen;
+    private BaseDatosJuego baseDatosJuego;
+
+    public Main(BaseDatosJuego bd){
+        this.baseDatosJuego=bd;
+    }
 
 	@Override
 	public void create () {
@@ -35,5 +41,9 @@ public class Main extends Game {
 	public void setPantallaActual(BaseScreen screen){
 	    this.screen=screen;
 	    setScreen(this.screen);
+    }
+
+    public BaseDatosJuego getBaseDatosJuego() {
+        return baseDatosJuego;
     }
 }

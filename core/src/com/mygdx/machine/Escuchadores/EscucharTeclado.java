@@ -12,6 +12,7 @@ import com.mygdx.machine.Mapas.Colisiones;
 import com.mygdx.machine.Mapas.MapaInicial;
 import com.mygdx.machine.Mapas.PantallaClick;
 import com.mygdx.machine.Personaje.Jugador;
+import com.mygdx.machine.basedatos.BaseDatosJuego;
 import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
 
 public class EscucharTeclado implements InputProcessor {
@@ -52,7 +53,7 @@ public class EscucharTeclado implements InputProcessor {
         if(pantallaInicio==false) {
             if (pantallaClick.getRectangle().x <= screenX) {
                 pantallaInicio=true;
-                main.setPantallaActual(new MapaInicial(main, 100, 100));
+                main.setPantallaActual(new MapaInicial(main, 100, 100,main.getScreen().getBd()));
             }
         }
 

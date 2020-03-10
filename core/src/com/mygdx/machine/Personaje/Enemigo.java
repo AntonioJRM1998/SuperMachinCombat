@@ -10,10 +10,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.machine.Main;
 import com.mygdx.machine.Mapas.Colisiones;
-import com.mygdx.machine.Mapas.MapaBichos;
-import com.mygdx.machine.Mapas.MapaInicial;
-import com.mygdx.machine.Mapas.MapaPlantaBaja;
-import com.mygdx.machine.Mapas.MapaPueblo;
 
 import java.util.Random;
 
@@ -47,6 +43,7 @@ public class Enemigo extends Actor {
         this.wReescalado = wReescalado;
         this.hReescalado = hReescalado;
         this.setSize(Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() / 10);
+        vida=20;
         ran=new Random(3);
         array[0]='w';
         array[1]='s';
@@ -133,5 +130,17 @@ public class Enemigo extends Actor {
                 }
                 break;
         }
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public int getVida() {
+        return vida;
     }
 }

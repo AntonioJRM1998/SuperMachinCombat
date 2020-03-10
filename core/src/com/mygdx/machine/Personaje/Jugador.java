@@ -87,7 +87,7 @@ public class Jugador extends Actor {
                                     break;
                                 case "salida1":
                                     main.dispose();
-                                    main.setPantallaActual(new MapaInicial(main,347,298));
+                                    main.setPantallaActual(new MapaInicial(main,347,298,main.getScreen().getBd()));
                                     break;
                                 case "salida2":
                                     main.dispose();
@@ -100,6 +100,10 @@ public class Jugador extends Actor {
                                 case "bichos":
                                     main.dispose();
                                     main.setPantallaActual(new MapaBichos(main,100,100));
+                                    break;
+                                case "salidaPuebloBichos":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPueblo(main,196,22));
                                     break;
                             }
                         }
@@ -130,7 +134,7 @@ public class Jugador extends Actor {
                                     break;
                                 case "salida1":
                                     main.dispose();
-                                    main.setPantallaActual(new MapaInicial(main,347,298));
+                                    main.setPantallaActual(new MapaInicial(main,347,298,main.getScreen().getBd()));
                                     break;
                                 case "salida2":
                                     main.dispose();
@@ -143,6 +147,11 @@ public class Jugador extends Actor {
                                 case "bichos":
                                     main.dispose();
                                     main.setPantallaActual(new MapaBichos(main,100,100));
+                                    break;
+                                case "salidaPuebloBichos":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPueblo(main,196,22));
+                                    break;
                             }
                         }
                     }
@@ -170,7 +179,7 @@ public class Jugador extends Actor {
                                     break;
                                 case "salida1":
                                     main.dispose();
-                                    main.setPantallaActual(new MapaInicial(main,347,298));
+                                    main.setPantallaActual(new MapaInicial(main,347,298,main.getScreen().getBd()));
                                     break;
                                 case "salida2":
                                     main.dispose();
@@ -184,6 +193,10 @@ public class Jugador extends Actor {
                                 case "bichos":
                                     main.dispose();
                                     main.setPantallaActual(new MapaBichos(main,100,100));
+                                case "salidaPuebloBichos":
+                                    main.dispose();
+                                    main.setPantallaActual(new MapaPueblo(main,196,22));
+                                    break;
                             }
                         }
                     }
@@ -210,7 +223,7 @@ public class Jugador extends Actor {
                                     break;
                                 case "salida1":
                                     main.dispose();
-                                    main.setPantallaActual(new MapaInicial(main,347,298));
+                                    main.setPantallaActual(new MapaInicial(main,347,298,main.getScreen().getBd()));
                                     break;
                                 case "salida2":
                                     main.dispose();
@@ -397,5 +410,7 @@ public class Jugador extends Actor {
         return y;
     }
 
-
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
 }

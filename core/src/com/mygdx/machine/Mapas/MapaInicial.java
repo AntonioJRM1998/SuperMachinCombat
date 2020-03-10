@@ -3,7 +3,10 @@ package com.mygdx.machine.Mapas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
@@ -15,13 +18,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.machine.Escuchadores.EscucharTeclado;
 import com.mygdx.machine.Main;
 import com.mygdx.machine.Personaje.Jugador;
+import com.mygdx.machine.basedatos.BaseDatosJuego;
 
 public class MapaInicial extends BaseScreen {
         private Jugador player;
         private SpriteBatch batch;
-    public MapaInicial(Main main,float x,float y) {
+    public MapaInicial(Main main,float x,float y,BaseDatosJuego base) {
         super(main);
         this.main=main;
+        this.bd=main.getBaseDatosJuego();
+        puntuacion=new BitmapFont(Gdx.files.internal("recursos/score.ttf"));
+        bichoMatado=bd.cargar();
         w= Gdx.graphics.getWidth();
         h=Gdx.graphics.getHeight();
         musicaMapa1=Gdx.audio.newMusic(Gdx.files.internal("musica/musicaPueblo.mp3"));
@@ -88,6 +95,11 @@ public class MapaInicial extends BaseScreen {
         batch.end();
         renderer.render(decorationLayersIndices);
         stage.draw();
+        batch.begin();
+        GlyphLayout muerteBicho=new GlyphLayout(puntuacion,"Puntuacion:"+bichoMatado);
+        puntuacion.draw(batch,muerteBicho,Gdx.graphics.getWidth()-600,Gdx.graphics.getHeight()-10);
+        puntuacion.setColor(Color.BLACK);
+        batch.end();
     }
 
     public void dispose() {

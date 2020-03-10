@@ -1,7 +1,6 @@
 package com.mygdx.machine.basedatos;
 
-public interface BaseDatos {
+public interface BaseDatosJuego {
     public int cargar();
     public void guardar(int nuevaPuntuacion);
-
 }

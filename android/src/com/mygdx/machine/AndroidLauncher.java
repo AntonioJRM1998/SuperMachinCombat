@@ -3,19 +3,19 @@ package com.mygdx.machine;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Display;
+import android.widget.Toast;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.mygdx.machine.Main;
+import com.mygdx.machine.basedatos.BaseDeDatosAndroid;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new Main(), config);
+		initialize(new Main(new BaseDeDatosAndroid(this)), config);
+        Toast.makeText(this,"Bienvendio",Toast.LENGTH_LONG).show();
 	}
     @Override
     public void onBackPressed() {

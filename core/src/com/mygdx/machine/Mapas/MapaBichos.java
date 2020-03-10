@@ -3,7 +3,10 @@ package com.mygdx.machine.Mapas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
@@ -23,18 +26,16 @@ public class MapaBichos extends BaseScreen {
     private Jugador player;
     private Enemigo enemigo;
     private SpriteBatch batch;
-    private char[]array=new char[4];
-    private Random ran;
     public MapaBichos(Main main,float x,float y) {
         super(main);
-        ran=new Random(3);
+        unaVez=0;
+        this.bd=main.getBaseDatosJuego();
+        quitarVida=false;
+        puntuacion=new BitmapFont(Gdx.files.internal("recursos/score.ttf"));
+        bichoMatado=bd.cargar();
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         manager = new AssetManager();
-        array[0]='w';
-        array[1]='s';
-        array[2]='d';
-        array[3]='a';
         manager.setLoader(TiledMap.class, new TmxMapLoader());
         manager.load("mapas/MapaEntrenamiento.tmx", TiledMap.class);
         manager.finishLoading();
@@ -83,7 +84,10 @@ public class MapaBichos extends BaseScreen {
         camera.update();
         if(Gdx.input.isButtonPressed(0)&&!getaBoolean()){
             player.moverJugador(getLetra());
-            enemigo.moverJugador(array[ran.nextInt()]);
+        }
+        if(player.getRectangle().overlaps(enemigo.getRectangle())&&quitarVida==true) {
+                bichoMatado = bichoMatado + 1;
+                bd.guardar(bichoMatado);
         }
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
@@ -95,5 +99,11 @@ public class MapaBichos extends BaseScreen {
         batch.end();
         renderer.render(decorationLayersIndices);
         stage.draw();
+        batch.begin();
+        GlyphLayout muerteBicho=new GlyphLayout(puntuacion,"Puntuacion:"+bichoMatado);
+        puntuacion.draw(batch,muerteBicho,Gdx.graphics.getWidth()-600,Gdx.graphics.getHeight()-10);
+        puntuacion.setColor(Color.BLACK);
+        batch.end();
     }
+
 }
